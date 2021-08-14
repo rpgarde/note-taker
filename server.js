@@ -4,6 +4,7 @@ const fs = require('fs');
 const PORT = process.env.PORT || 3001;
 const app = express();
 const path = require('path')
+const uuid = require('./helpers/uuid');
 
 app.use(express.static('public'));
 
@@ -33,11 +34,11 @@ app.get('/api/notes',(req,res)=>{
 
 // Post takes current note and adds it to the database file
 app.post('/api/notes',(req,res)=>{
-  console.log("I am posting!");
-  console.log(req.body);
-
-  res.json(req.body);
-  const newNote = req.body;
+  // desructure body 
+  const { title, text } = req.body;
+  // use UUID helper to create ID
+  const newNote = {title, text, id:uuid()};
+  res.json(newNote);
 
   fs.readFile('./db/db.json', 'utf8', (err, data) => {
     if (err) {
@@ -61,5 +62,5 @@ app.post('/api/notes',(req,res)=>{
 })
 
 app.listen(PORT, () =>
-  console.log(`Serving static asset routes on port ${PORT}!`)
+  console.log(`App listening at http://localhost:${PORT} 🚀`)
 );
