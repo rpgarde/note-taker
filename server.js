@@ -61,6 +61,34 @@ app.post('/api/notes',(req,res)=>{
   });
 })
 
+// deletes notes
+app.delete('/api/notes/:id',(req,res)=>{
+  // reads file 
+  const deleteId = req.params.id
+  const isNotId = (i) => i.id != deleteId
+
+  fs.readFile('./db/db.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      // Convert string into JSON object
+      const parsedNotes = JSON.parse(data);
+      const afterDelete = parsedNotes.filter(isNotId)
+      // returns array post-deletion as response
+      res.json(afterDelete);
+      // writes array post-deletion into the db
+      fs.writeFile(
+        './db/db.json',
+        JSON.stringify(afterDelete),
+        (writeErr) =>
+          writeErr
+            ? console.error(writeErr)
+            : console.info(`Successfully deleted ${deleteId}!`)
+      )
+    }
+  });
+})
+
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
 );
