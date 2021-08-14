@@ -4,7 +4,8 @@ const fs = require('fs');
 const PORT = process.env.PORT || 3001;
 const app = express();
 const path = require('path')
-const uuid = require('./helpers/uuid');
+// npm package uniqid which generates unique IDs
+var uniqid = require('uniqid')
 
 app.use(express.static('public'));
 
@@ -32,12 +33,17 @@ app.get('/api/notes',(req,res)=>{
   });
 })
 
+// wildcard so any other /URL returns index.html
+app.get('*',(req,res)=>{
+  res.sendFile(path.join(__dirname, 'public/index.html'))
+})
+
 // Post takes current note and adds it to the database file
 app.post('/api/notes',(req,res)=>{
   // desructure body 
   const { title, text } = req.body;
   // use UUID helper to create ID
-  const newNote = {title, text, id:uuid()};
+  const newNote = {title, text, id:uniqid()};
   res.json(newNote);
 
   fs.readFile('./db/db.json', 'utf8', (err, data) => {
@@ -65,6 +71,7 @@ app.post('/api/notes',(req,res)=>{
 app.delete('/api/notes/:id',(req,res)=>{
   // reads file 
   const deleteId = req.params.id
+  // function which returns true if the ID is NOT the ID you want to delete
   const isNotId = (i) => i.id != deleteId
 
   fs.readFile('./db/db.json', 'utf8', (err, data) => {
@@ -73,8 +80,8 @@ app.delete('/api/notes/:id',(req,res)=>{
     } else {
       // Convert string into JSON object
       const parsedNotes = JSON.parse(data);
+      // returns an array of objects that did not have the ID
       const afterDelete = parsedNotes.filter(isNotId)
-      // returns array post-deletion as response
       res.json(afterDelete);
       // writes array post-deletion into the db
       fs.writeFile(
