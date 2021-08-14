@@ -4,6 +4,9 @@
 ## Description
 This is a note taker built with Node.js, Express, and is deployed on Heroku [here](https://mysterious-oasis-91030.herokuapp.com/). This lets you write notes, save notes, view previous notes, and delete previous notes. This also uses the [uniqid](https://www.npmjs.com/package/uniqid) npm package.
 
+Functionality shown below
+![GIF Demo](./public/assets/demo/notetakergif.gif)
+
 ## Table of Contents 
 * [Installation](#installation)
 * [Usage](#usage)
