@@ -2,7 +2,7 @@
 ![license](https://img.shields.io/github/license/rpgarde/readme-generator)
 
 ## Description
-This is a note taker built with Node.js, Express, and is deployed on Heroku. This lets you write notes, save notes, view previous notes, and delete previous notes. This also uses the [uniqid](https://www.npmjs.com/package/uniqid) npm package.
+This is a note taker built with Node.js, Express, and is deployed on Heroku [here](https://mysterious-oasis-91030.herokuapp.com/). This lets you write notes, save notes, view previous notes, and delete previous notes. This also uses the [uniqid](https://www.npmjs.com/package/uniqid) npm package.
 
 ## Table of Contents 
 * [Installation](#installation)
@@ -18,6 +18,7 @@ Run the following code to install dependencies:
         npm i
 
 ## Usage
+See deployed app [HERE](https://mysterious-oasis-91030.herokuapp.com/)
 1. Click "Get started" to see all the saved notes
 2. Click + to create a new note
 3. Once you type in a title and text, click the save icon to save
